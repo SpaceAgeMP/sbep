@@ -423,8 +423,6 @@ function ENT:Think()
 				continue
 			end
 
-			if true then continue end
-
 			local physangvel = physobj:GetAngleVelocity()
 
 			physobj:SetVelocity((entfor * self.GyroSpeed) + (entup * self.VSpeed) + (entright * self.HSpeed))
