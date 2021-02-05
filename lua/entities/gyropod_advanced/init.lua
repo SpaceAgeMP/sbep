@@ -678,7 +678,7 @@ end
 function ENT:FreezeMotion()  --Freezes all constrained entities
 	local constrainedents = constraint.GetAllConstrainedEntities( self )
 	for _, ent in pairs( constrainedents ) do
-		if not IsValid(ents) then return end
+		if not IsValid(ent) then return end
 		if self.FreezeOn then
 			local physobj = ent:GetPhysicsObject()
 			physobj:EnableMotion(false)
