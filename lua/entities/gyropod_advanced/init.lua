@@ -421,7 +421,7 @@ function ENT:Think()
 
 			local physobj = c:GetPhysicsObject()
 			if not IsValid(physobj) then
-				return
+				continue
 			end
 
 			local physangvel = physobj:GetAngleVelocity()
