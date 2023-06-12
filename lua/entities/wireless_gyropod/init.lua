@@ -372,7 +372,7 @@ hook.Add( "KeyPress", entity_name .. "_keypressed", function( ply, key )
 	if (!keys[key]) then return end
 	for _,v in pairs(ents.FindByClass(entity_name)) do
 		local pod = v:GetPod()
-		if (pod and pod:GetDriver() == ply and pod:IsVehicle()) then
+		if (pod and IsValid(pod) and pod:GetDriver() == ply and pod:IsVehicle()) then
 			v:TriggerInput(keys[key], 1)
 		end
 	end
@@ -383,7 +383,7 @@ hook.Add( "KeyRelease", entity_name .. "_keyreleased", function( ply, key )
 	if (!keys[key]) then return end
 	for _,v in pairs(ents.FindByClass(entity_name)) do
 		local pod = v:GetPod()
-		if (pod and pod:GetDriver() == ply and pod:IsVehicle()) then
+		if (pod and IsValid(pod) and pod:GetDriver() == ply and pod:IsVehicle()) then
 			v:TriggerInput(keys[key], 0)
 		end
 	end
