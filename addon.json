@@ -4,11 +4,16 @@
 	"tags"	:	[ "fun", "build" ],
 	"ignore":
 	[
-		".git*",
-		"addon.txt",
-		"data*",
+		".gitignore",
+		".git",
+		".git/*",
+		".git\\*",
+
 		"*.txt",
 		"*.bat",
+		"*.lua",
+
+		"addon.txt",
 		"LICENSE",
 		"NOTICE",
 		"README.md"
