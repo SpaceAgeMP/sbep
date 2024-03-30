@@ -12,6 +12,7 @@ util.PrecacheSound( "buttons/combine_button3.wav" )
 util.PrecacheSound( "buttons/combine_button2.wav" )
 util.PrecacheSound( "buttons/lever7.wav" )
 
+local rnd = math.Round
 local GyroPitchComp = 0
 
 function ENT:Initialize()
@@ -598,7 +599,6 @@ local function rnd_or_nil(num)
 end
 
 function ENT:GyroWeight()
-	local rnd = math.Round
 	local GyroPos = self:GetPos() 
 	local gyrofor = GyroPos + (self:GetForward() * 5000)
 	local gyroback = GyroPos + (self:GetForward() * -5000)
