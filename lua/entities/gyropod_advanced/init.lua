@@ -249,9 +249,6 @@ function ENT:TriggerInput(iname, value)
 end
 
 function ENT:Think()	
-	
-	
-	
 	local abs, round, clamp, sqrt = math.abs, math.Round, math.Clamp, math.sqrt  --speed up math
  	local gyroshipangles = self:GetAngles()  
 	if (self.Pod and IsValid(self.Pod)) then  --Determines whether stuff comes from vehicle or entity
@@ -501,9 +498,9 @@ function ENT:Think()
 		self.OnOut, self.GyroSpeed, self.VSpeed, self.HSpeed = 0, localentorparvel.x, localentorparvel.z, -localentorparvel.y
 
 		if self.HighEngineSound or self.LowDroneSound then  --Wind down engine sound when turned off
-			self.HighEnginePitch = clamp(self.HighEnginePitch - 0.7, 0, 300)
-			self.LowDronePitch = clamp(self.LowDronePitch - 0.3, 0, 300)
-			self.HighEngineVolume = clamp(self.HighEngineVolume - 0.005, 0, 2)
+			self.HighEnginePitch = clamp((self.HighEnginePitch or 0) - 0.7, 0, 300)
+			self.LowDronePitch = clamp((self.LowDronePitch or 0) - 0.3, 0, 300)
+			self.HighEngineVolume = clamp((self.HighEngineVolume or 0) - 0.005, 0, 2)
 			self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume, 0)
 			self.HighEngineSound.ChangePitch(self.HighEngineSound, self.HighEnginePitch, 0)
 			self.LowDroneSound.ChangePitch(self.LowDroneSound, self.LowDronePitch, 0)
@@ -593,6 +590,13 @@ function ENT:PodModelFix() --fixing the strange bug where some vehicles are rota
 	end	
 end
 
+local function rnd_or_nil(num)
+	if not num then
+		return nil
+	end
+	return rnd(num)
+end
+
 function ENT:GyroWeight()
 	local rnd = math.Round
 	local GyroPos = self:GetPos() 
@@ -625,7 +629,13 @@ function ENT:GyroWeight()
 				table.insert(self.PhysTable, ents)
 			end				
 		end
-		local frontent, rearent, rightent, leftent, heaviest = rnd(self.FrontDist[1]), rnd(self.BackDist[1]), rnd(self.RightDist[1]), rnd(self.LeftDist[1]), rnd(self.MassTable[1])
+		local frontent, rearent, rightent, leftent, heaviest = rnd_or_nil(self.FrontDist[1]), rnd_or_nil(self.BackDist[1]), rnd_or_nil(self.RightDist[1]), rnd_or_nil(self.LeftDist[1]), rnd_or_nil(self.MassTable[1])
+
+		if frontent == nil or rearent == nil or rightent == nil or leftent == nil or heaviest == nil then
+			self.SystemOn = false
+			return
+		end
+
 		self.frontlength, self.rearlength, self.rightwidth, self.leftwidth = frontent, rearent, rightent, leftent
 		if IsValid(self:GetParent()) then
 			local par = self:GetParent()
